@@ -111,16 +111,14 @@ class PetFriends:
         return status, result
 
     # Функция на добавления фото
-    def add_photo_pet(self, auth_key: json, pet_id: str, pet_photo: str) -> json:
+    def post_change_pet_photo(self, auth_key: json, pet_id: str, pet_photo: str) -> json:
         data = MultipartEncoder(
-            fields= {
+            fields={
                 'pet_photo': (pet_photo, open(pet_photo, 'rb'), 'image/jpeg')
             }
         )
-
-        headers = {'auth_key': auth_key['key'], 'Content_Type': data.content_type}
-
-        res = requests.post(self.base_url + '/api/pets/set_photo/' + pet_id, headers=headers, data=data)
+        headers = {'auth_key': auth_key['key'], 'Content-Type': data.content_type}
+        res = requests.post(self.base_url + 'api/pets/set_photo/' + pet_id, headers=headers, data=data)
         status = res.status_code
         result = ""
         try:
